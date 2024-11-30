@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Tareas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="welcome-message">¡Bienvenido!</h1>
+      <p id="last-visit"></p>
+      <div class="clock" id="clock"></div>
+    </header>
+
+    <main>
+      <section id="task-manager">
+        <h2>Gestión de Tareas</h2>
+
+        <form id="task-form">
+          <input type="text" id="task-title" placeholder="Título de la tarea" required>
+          <textarea id="task-description" placeholder="Descripción de la tarea"></textarea>
+          <input type="datetime-local" id="task-deadline">
+          <button type="submit">Agregar Tarea</button>
+        </form>
+
+        <div id="task-filters">
+          <button data-filter="all">Mostrar Todas</button>
+          <button data-filter="pending">Pendientes</button>
+          <button data-filter="completed">Completadas</button>
+        </div>
+
+        <ul id="task-list"></ul>
+
+        <div id="task-stats">
+          <p>Total de tareas: <span id="total-tasks">0</span></p>
+          <p>Pendientes: <span id="pending-tasks">0</span></p>
+          <p>Completadas: <span id="completed-tasks">0</span></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
