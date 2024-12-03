@@ -139,4 +139,9 @@ body {
   .statistics p {
     margin: 5px 0;
   }
+
+  .alerta {
+    background-color: #ffcccc; /* Color de fondo para tareas vencidas */
+    border: 2px solid red;
+  }
   

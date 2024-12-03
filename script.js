@@ -30,28 +30,28 @@ function updateClock() {
   function renderTasks(filter = "all") {
     const taskList = document.getElementById("task-list");
     taskList.innerHTML = "";
-  
+
     const filteredTasks = tasks.filter(task => {
-      if (filter === "pending") return !task.completed;
-      if (filter === "completed") return task.completed;
-      return true;
+        if (filter === "pending") return !task.completed;
+        if (filter === "completed") return task.completed;
+        return true;
     });
-  
+
     filteredTasks.forEach(task => {
-      const li = document.createElement("li");
-      li.className = task.completed ? "completed" : "pending";
-      li.innerHTML = `
-        <h3>${task.title}</h3>
-        <p>${task.description}</p>
-        <p>Fecha límite: ${task.deadline || "No especificada"}</p>
-        <button onclick="toggleTaskStatus('${task.id}')">${task.completed ? "Marcar como Pendiente" : "Marcar como Completada"}</button>
-        <button onclick="deleteTask('${task.id}')">Eliminar</button>
-      `;
-      taskList.appendChild(li);
+        const li = document.createElement("li");
+        li.className = `tarea ${task.completed ? "completed" : "pending"}`;
+        li.innerHTML = `
+            <h3 class="nombre-tarea">${task.title}</h3>
+            <p>${task.description}</p>
+            <p class="fecha-limite">${task.deadline || "No especificada"}</p>
+            <button onclick="toggleTaskStatus('${task.id}')">${task.completed ? "Marcar como Pendiente" : "Marcar como Completada"}</button>
+            <button onclick="deleteTask('${task.id}')">Eliminar</button>
+        `;
+        taskList.appendChild(li);
     });
-  
+
     updateStats();
-  }
+}
   
   function addTask(event) {
     event.preventDefault();
@@ -109,3 +109,24 @@ function updateClock() {
       button.addEventListener("click", () => renderTasks(button.dataset.filter));
     });
   });
+
+  // Función para verificar la fecha límite de las tareas
+function verificarFechasLimite() {
+  const tareas = document.querySelectorAll('.tarea'); // Selecciona todas las tareas en la página
+
+  tareas.forEach(tarea => {
+      const fechaLimiteElemento = tarea.querySelector('.fecha-limite'); // Selecciona el elemento con la fecha límite
+      if (fechaLimiteElemento) {
+          const fechaLimite = new Date(fechaLimiteElemento.textContent); // Convierte la fecha límite en un objeto Date
+          const ahora = new Date();
+
+          if (fechaLimite <= ahora) {
+              tarea.classList.add('alerta'); // Añade una clase para alertar visualmente
+              alert(`¡Atención! La tarea "${tarea.querySelector('.nombre-tarea').textContent}" ha alcanzado su fecha límite.`);
+          }
+      }
+  });
+}
+
+// Ejecutar la verificación cada minuto
+setInterval(verificarFechasLimite, 60000); // Verifica cada 60 segundos
